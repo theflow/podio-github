@@ -47,10 +47,10 @@ heroku config:set \
 git push heroku master
 ```
 
-Configure your Github repository to use this as a Service webhook.
+Configure your Github repository to use the Heroku app as a webhook endpoint.
 
- * Look up your app id and token on Podio for your Bugs app (Wrench icon -> Developer)
- * Go to Settings -> Service Hooks -> WebHook URLs on the repository you want to configure
- * Construct your URL like this: `https://my-podio-github.heroku.com/hook?app_id=BUG_APP_ID&app_token=BUG_APP_TOKEN`
- * Add this URL as a WebHook URL on Github
- * Click "Test Hook" to see if it works
+ * On Podio look up your app id and app token for your Bugs app (Wrench icon -> Developer)
+ * On Github go to Settings -> Webhooks & Services -> Add webhook on the repository you want to set up
+ * Construct your URL like this: `https://my-podio-github.herokuapp.com/hook?app_id=BUG_APP_ID&app_token=BUG_APP_TOKEN`
+ * Add this URL as a WebHook URL on Github with a Content-Type of `application/x-www-form-urlencoded`. Leave the other options in their default state.
+ * That should be it.
