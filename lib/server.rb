@@ -3,6 +3,11 @@ require "#{File.expand_path("../", __FILE__)}/commit_parser"
 require "#{File.expand_path("../", __FILE__)}/podio_poster"
 
 class WebHookServer < Sinatra::Base
+  # configure do
+  #   set :raise_errors, true
+  #   set :show_exceptions, false
+  # end
+
   get '/' do
     "It works"
   end

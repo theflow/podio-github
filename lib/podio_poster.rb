@@ -1,5 +1,10 @@
 module Podio
-  class Poster
+  class BugPoster
+    def initialize(app_id, app_token)
+      @app_id = app_id
+      @podio_client = setup_client(app_id, app_token)
+    end
+
     def setup_client(app_id, app_token)
       podio_client = Podio::Client.new({
         :api_key => ENV["PODIO_CLIENT_ID"],
@@ -8,12 +13,6 @@ module Podio
       podio_client.authenticate_with_app(app_id, app_token)
 
       podio_client
-    end
-  end
-
-  class BugPoster < Poster
-    def initialize(app_id, app_token)
-      @podio_client = setup_client(app_id, app_token)
     end
 
     def process(commits)
@@ -61,6 +60,9 @@ module Podio
     end
 
     def get_item(ticket_id)
+      @podio_client.connection.get("/app/#{@app_id}/item/#{ticket_id}").body
+    rescue Podio::NotFoundError
+      # try with global item_id
       @podio_client.connection.get("/item/#{ticket_id}").body
     rescue Podio::AuthorizationError, Podio::GoneError, Podio::NotFoundError
       nil

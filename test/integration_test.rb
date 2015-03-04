@@ -21,11 +21,13 @@ class IntegrationTest < Test::Unit::TestCase
       to_return(:body => "access_token=lala")
 
     # set bug #60097 to Fixed
+    stub_request(:get, "https://api.podio.com/app/42/item/60097").to_return(:status => 404)
     stub_request(:get, 'https://api.podio.com/item/60097').to_return(:status => 200)
     stub_request(:post, "https://api.podio.com/comment/item/60097").to_return(:status => 200)
     stub_request(:put, "https://api.podio.com/item/60097/value").with(:body => /Fixed/).to_return(:status => 200)
 
     # only comment on #60095
+    stub_request(:get, "https://api.podio.com/app/42/item/60095").to_return(:status => 404)
     stub_request(:get, 'https://api.podio.com/item/60095').to_return(:status => 200)
     stub_request(:post, "https://api.podio.com/comment/item/60095").to_return(:status => 200)
 
