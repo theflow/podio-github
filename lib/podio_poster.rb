@@ -30,13 +30,13 @@ module Podio
       return if item.nil?
       return unless [:cmd_close, :cmd_ref].include?(cmd)
 
-      add_comment_to_item(item_id, comment)
+      add_comment_to_item(item, comment)
       set_status_to_fixed(item) if cmd == :cmd_close
     end
 
-    def add_comment_to_item(item_id, comment)
+    def add_comment_to_item(item, comment)
       @podio_client.connection.post do |req|
-        req.url "/comment/item/#{item_id}"
+        req.url "/comment/item/#{item['item_id']}"
         req.body = {:value => comment}
       end
     end
